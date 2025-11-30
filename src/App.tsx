@@ -1,20 +1,20 @@
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
-import { Home } from './pages/Home';
-import { ProductDetail } from './pages/ProductDetail';
-import { Products } from './pages/Products';
-import { Checkout } from './pages/Checkout';
-import { About } from './pages/About';
-import { OrderTracking } from './pages/OrderTracking';
-import { Contact } from './pages/Contact';
-import { PrivacyPolicy } from './pages/PrivacyPolicy';
-import { TermsOfService } from './pages/TermsOfService';
-import { ShippingPolicy } from './pages/ShippingPolicy';
-import { Blog } from './pages/Blog';
-import { Wishlist } from './pages/Wishlist';
-import { ProductComparison } from './pages/ProductComparison';
-import { Login } from './pages/Login';
-import { Account } from './pages/Account';
+import { Home } from './pages/home/Home';
+import { ProductDetail } from './pages/product-detail/ProductDetail';
+import { Products } from './pages/products/Products';
+import { Checkout } from './pages/checkout/Checkout';
+import { About } from './pages/about/About';
+import { OrderTracking } from './pages/order-tracking/OrderTracking';
+import { Contact } from './pages/contact/Contact';
+import { PrivacyPolicy } from './pages/privacy-policy/PrivacyPolicy';
+import { TermsOfService } from './pages/terms-of-service/TermsOfService';
+import { ShippingPolicy } from './pages/shipping-policy/ShippingPolicy';
+import { Blog } from './pages/blog/Blog';
+import { Wishlist } from './pages/wishlist/Wishlist';
+import { ProductComparison } from './pages/product-comparison/ProductComparison';
+import { Login } from './pages/login/Login';
+import { Account } from './pages/account/Account';
 
 function App() {
   return (
@@ -37,9 +37,9 @@ function App() {
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="comparison" element={<ProductComparison />} />
         <Route path="account" element={<Account />} />
+        <Route path="login" element={<Login />} />
         <Route path="*" element={<div className="container" style={{ padding: '40px' }}>404 Not Found</div>} />
       </Route>
-      <Route path="/login" element={<Login />} />
     </Routes>
   );
 }

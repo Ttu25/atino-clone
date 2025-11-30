@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { User, Package, Heart, LogOut, Edit2, Save } from 'lucide-react';
-import { useWishlist } from '../context/WishlistContext';
+import { useWishlist } from '../../context/WishlistContext';
 import './Account.css';
 
 export const Account: React.FC = () => {

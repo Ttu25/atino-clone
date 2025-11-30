@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Mail, Lock, User as UserIcon } from 'lucide-react';
 import './Login.css';

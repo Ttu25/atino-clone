@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { products } from '../data/products';
-import type { Product } from '../data/products';
-import { ProductCard } from '../components/product/ProductCard';
+import { products } from '../../data/products';
+import type { Product } from '../../data/products';
+import { ProductCard } from '../../components/product/ProductCard';
 import { Filter, ChevronDown } from 'lucide-react';
 import './Products.css';
 

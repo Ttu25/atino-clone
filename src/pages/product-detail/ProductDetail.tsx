@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { products } from '../data/products';
-import type { Product } from '../data/products';
+import { products } from '../../data/products';
+import type { Product } from '../../data/products';
 import { Star, Minus, Plus, ShoppingBag, Heart } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 import './ProductDetail.css';
 
 export const ProductDetail: React.FC = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useWishlist } from '../context/WishlistContext';
-import { useCart } from '../context/CartContext';
+import { useWishlist } from '../../context/WishlistContext';
+import { useCart } from '../../context/CartContext';
 import { Trash2, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import './Wishlist.css';

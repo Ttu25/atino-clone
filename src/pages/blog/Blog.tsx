@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { blogPosts } from '../data/blog';
+import { blogPosts } from '../../data/blog';
 import { Calendar, User } from 'lucide-react';
 import './Blog.css';
 

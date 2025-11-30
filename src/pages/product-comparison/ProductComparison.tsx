@@ -1,8 +1,8 @@
 import React from 'react';
-import { useComparison } from '../context/ComparisonContext';
+import { useComparison } from '../../context/ComparisonContext';
 import { X, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 import './ProductComparison.css';
 
 export const ProductComparison: React.FC = () => {
