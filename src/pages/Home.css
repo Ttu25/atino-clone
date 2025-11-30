@@ -1,0 +1,142 @@
+.hero-section {
+    height: calc(100vh - var(--header-height));
+    background-image: url('https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?q=80&w=2071&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.hero-content {
+    position: relative;
+    text-align: center;
+    color: var(--color-white);
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    margin-bottom: 32px;
+    font-weight: 300;
+}
+
+.hero-btn {
+    min-width: 160px;
+}
+
+.section {
+    padding: 80px 20px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.section-subtitle {
+    color: var(--color-gray-800);
+    font-size: 14px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.section-footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.banner-section {
+    height: 400px;
+    background-image: url('https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=2000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.banner-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.banner-content {
+    position: relative;
+    text-align: center;
+    color: var(--color-white);
+    z-index: 1;
+}
+
+.banner-content h2 {
+    font-size: 36px;
+    margin-bottom: 16px;
+}
+
+.banner-content p {
+    font-size: 16px;
+    margin-bottom: 24px;
+}
+
+.btn-white {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    padding: 12px 32px;
+    font-weight: 600;
+}
+
+.btn-white:hover {
+    background-color: var(--color-gray-100);
+}
+
+@media (max-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
