@@ -7,14 +7,15 @@ interface ProductCardProps {
     product: Product;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard = ({ product }: ProductCardProps) => {
+    const productId = product.id || product._id;
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
     };
 
     return (
         <div className="product-card">
-            <Link to={`/product/${product.id}`} className="product-image-container">
+            <Link to={`/product/${productId}`} className="product-image-container">
                 <img src={product.image} alt={product.name} className="product-image" />
                 {product.isNew && <span className="badge badge-new">New</span>}
                 {product.isSale && <span className="badge badge-sale">Sale</span>}
@@ -23,7 +24,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 </div>
             </Link>
             <div className="product-info">
-                <Link to={`/product/${product.id}`} className="product-name">
+                <Link to={`/product/${productId}`} className="product-name">
                     {product.name}
                 </Link>
                 <div className="product-price">

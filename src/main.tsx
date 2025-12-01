@@ -7,6 +7,7 @@ import { ComparisonProvider } from './context/ComparisonContext';
 import { AuthProvider } from './context/AuthContext';
 import App from './App';
 import './index.css';
+import { Toaster } from 'react-hot-toast';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -15,6 +16,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <CartProvider>
           <WishlistProvider>
             <ComparisonProvider>
+              <Toaster
+                position="top-center"
+                reverseOrder={false}
+              />
               <App />
             </ComparisonProvider>
           </WishlistProvider>

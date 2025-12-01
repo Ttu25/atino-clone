@@ -1,16 +1,20 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { authAPI } from '../services/api';
 
 interface User {
+    _id: string;
     id: string;
     name: string;
     email: string;
     phone?: string;
     address?: string;
+    role?: string;
 }
 
 interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
+    loading: boolean;
     login: (email: string, password: string) => Promise<boolean>;
     register: (name: string, email: string, password: string) => Promise<boolean>;
     logout: () => void;
@@ -20,92 +24,86 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(() => {
-        const saved = localStorage.getItem('atino-user');
-        return saved ? JSON.parse(saved) : null;
-    });
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (user) {
-            localStorage.setItem('atino-user', JSON.stringify(user));
+        const token = localStorage.getItem('token');
+        if (token) {
+            // Verify token and get user profile
+            authAPI.getProfile()
+                .then(response => {
+                    if (response.success) {
+                        setUser({ ...response.data, id: response.data._id });
+                    }
+                })
+                .catch(() => {
+                    // Token invalid, remove it
+                    localStorage.removeItem('token');
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         } else {
-            localStorage.removeItem('atino-user');
+            setLoading(false);
         }
-    }, [user]);
+    }, []);
 
     const login = async (email: string, password: string): Promise<boolean> => {
-        // Mock authentication - in real app, this would call an API
-        await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
+        try {
+            const response = await authAPI.login(email, password);
 
-        // Check if user exists in localStorage (registered users)
-        const registeredUsers = JSON.parse(localStorage.getItem('atino-registered-users') || '[]');
-        const foundUser = registeredUsers.find((u: any) => u.email === email && u.password === password);
-
-        if (foundUser) {
-            const { password: _, ...userWithoutPassword } = foundUser;
-            setUser(userWithoutPassword);
-            return true;
+            if (response.success) {
+                const { user: userData, token } = response.data;
+                setUser({ ...userData, id: userData._id });
+                localStorage.setItem('token', token);
+                // Notify other components about token change
+                window.dispatchEvent(new Event('tokenChanged'));
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error('Login error:', error);
+            return false;
         }
-
-        // Demo account
-        if (email === 'demo@atino.vn' && password === 'demo123') {
-            setUser({
-                id: 'demo-user',
-                name: 'Nguyễn Văn A',
-                email: 'demo@atino.vn',
-                phone: '0987654321',
-                address: '123 Nguyễn Huệ, Quận 1, TP.HCM'
-            });
-            return true;
-        }
-
-        return false;
     };
 
     const register = async (name: string, email: string, password: string): Promise<boolean> => {
-        // Mock registration
-        await new Promise(resolve => setTimeout(resolve, 500));
+        try {
+            const response = await authAPI.register(name, email, password);
 
-        const registeredUsers = JSON.parse(localStorage.getItem('atino-registered-users') || '[]');
-
-        // Check if email already exists
-        if (registeredUsers.some((u: any) => u.email === email)) {
+            if (response.success) {
+                const { user: userData, token } = response.data;
+                setUser({ ...userData, id: userData._id });
+                localStorage.setItem('token', token);
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error('Register error:', error);
             return false;
         }
-
-        const newUser = {
-            id: `user-${Date.now()}`,
-            name,
-            email,
-            password, // In real app, this would be hashed
-            phone: '',
-            address: ''
-        };
-
-        registeredUsers.push(newUser);
-        localStorage.setItem('atino-registered-users', JSON.stringify(registeredUsers));
-
-        const { password: _, ...userWithoutPassword } = newUser;
-        setUser(userWithoutPassword);
-        return true;
     };
 
     const logout = () => {
         setUser(null);
+        localStorage.removeItem('token');
+        // Notify other components about token change
+        window.dispatchEvent(new Event('tokenChanged'));
     };
 
-    const updateProfile = (data: Partial<User>) => {
-        if (user) {
-            const updatedUser = { ...user, ...data };
-            setUser(updatedUser);
+    const updateProfile = async (data: Partial<User>) => {
+        try {
+            const response = await authAPI.updateProfile(data);
 
-            // Update in registered users list
-            const registeredUsers = JSON.parse(localStorage.getItem('atino-registered-users') || '[]');
-            const index = registeredUsers.findIndex((u: any) => u.id === user.id);
-            if (index !== -1) {
-                registeredUsers[index] = { ...registeredUsers[index], ...data };
-                localStorage.setItem('atino-registered-users', JSON.stringify(registeredUsers));
+            if (response.success) {
+                setUser({ ...user!, ...response.data });
+                return true;
             }
+            return false;
+        } catch (error) {
+            console.error('Update profile error:', error);
+            return false;
         }
     };
 
@@ -114,6 +112,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             value={{
                 user,
                 isAuthenticated: !!user,
+                loading,
                 login,
                 register,
                 logout,

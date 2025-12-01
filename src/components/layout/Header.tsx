@@ -33,7 +33,11 @@ export const Header: React.FC = () => {
 
     const handleUserClick = () => {
         if (isAuthenticated) {
-            navigate('/account');
+            if (user?.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/account');
+            }
         } else {
             navigate('/login');
         }
@@ -44,7 +48,7 @@ export const Header: React.FC = () => {
             <div className="container header-container">
                 <div className="header-left">
                     <button
-                        className="mobile-menu-btn"
+                        className="mobile-menu-btns"
                         onClick={() => setIsMobileMenuOpen(true)}
                     >
                         <Menu size={24} />
@@ -79,7 +83,11 @@ export const Header: React.FC = () => {
                             </form>
                         )}
                     </div>
-                    <button className="icon-btn user-btn" onClick={handleUserClick} title={isAuthenticated ? user?.name : 'Đăng nhập'}>
+                    <button
+                        className="icon-btn user-btn"
+                        onClick={handleUserClick}
+                        title={isAuthenticated ? (user?.role === 'admin' ? `Admin: ${user.name}` : user?.name) : 'Đăng nhập'}
+                    >
                         <User size={22} />
                         {isAuthenticated && <span className="user-indicator"></span>}
                     </button>
@@ -105,6 +113,11 @@ export const Header: React.FC = () => {
                     <Link to="/collections" onClick={() => setIsMobileMenuOpen(false)}>BỘ SƯU TẬP</Link>
                     <Link to="/sale" onClick={() => setIsMobileMenuOpen(false)}>SALE</Link>
                     <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>VỀ CHÚNG TÔI</Link>
+                    {isAuthenticated && user?.role === 'admin' && (
+                        <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} className="admin-link">
+                            QUẢN TRỊ
+                        </Link>
+                    )}
                 </nav>
             </div>
         </header>

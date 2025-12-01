@@ -1,0 +1,54 @@
+.back-to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 30px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    color: #1a202c;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateX(120%);
+    opacity: 0;
+    z-index: 1000;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+.back-to-top svg {
+    transform: rotate(90deg);
+    color: #1a202c;
+}
+
+.back-to-top.visible {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.back-to-top:hover {
+    background: #1a202c;
+    color: #ffffff;
+}
+
+.back-to-top:hover svg {
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .back-to-top {
+        right: 12px;
+        bottom: 80px;
+        padding: 10px 8px;
+    }
+}
+

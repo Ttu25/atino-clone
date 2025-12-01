@@ -1,51 +1,92 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { wishlistAPI } from '../services/api';
 import type { Product } from '../data/products';
 
 interface WishlistContextType {
     wishlistItems: Product[];
-    addToWishlist: (product: Product) => void;
-    removeFromWishlist: (productId: string) => void;
+    loading: boolean;
+    addToWishlist: (product: Product) => Promise<boolean>;
+    removeFromWishlist: (productId: string) => Promise<boolean>;
     isInWishlist: (productId: string) => boolean;
     wishlistCount: number;
+    refreshWishlist: () => Promise<void>;
 }
 
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
 export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [wishlistItems, setWishlistItems] = useState<Product[]>(() => {
-        const saved = localStorage.getItem('atino-wishlist');
-        return saved ? JSON.parse(saved) : [];
-    });
+    const [wishlistItems, setWishlistItems] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        localStorage.setItem('atino-wishlist', JSON.stringify(wishlistItems));
-    }, [wishlistItems]);
-
-    const addToWishlist = (product: Product) => {
-        setWishlistItems(prev => {
-            if (prev.find(item => item.id === product.id)) {
-                return prev;
+    // Load wishlist on mount
+    const refreshWishlist = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (token) {
+                const response = await wishlistAPI.getWishlist();
+                if (response.success) {
+                    setWishlistItems(response.data.products || []);
+                }
             }
-            return [...prev, product];
-        });
+        } catch (error) {
+            console.error('Error loading wishlist:', error);
+        }
     };
 
-    const removeFromWishlist = (productId: string) => {
-        setWishlistItems(prev => prev.filter(item => item.id !== productId));
+    useEffect(() => {
+        refreshWishlist();
+    }, []);
+
+    const addToWishlist = async (product: Product): Promise<boolean> => {
+        try {
+            setLoading(true);
+            const response = await wishlistAPI.addToWishlist(product.id || product._id);
+
+            if (response.success) {
+                await refreshWishlist();
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error('Error adding to wishlist:', error);
+            return false;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const removeFromWishlist = async (productId: string): Promise<boolean> => {
+        try {
+            setLoading(true);
+            const response = await wishlistAPI.removeFromWishlist(productId);
+
+            if (response.success) {
+                await refreshWishlist();
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error('Error removing from wishlist:', error);
+            return false;
+        } finally {
+            setLoading(false);
+        }
     };
 
     const isInWishlist = (productId: string) => {
-        return wishlistItems.some(item => item.id === productId);
+        return wishlistItems.some(item => (item.id || item._id) === productId);
     };
 
     return (
         <WishlistContext.Provider
             value={{
                 wishlistItems,
+                loading,
                 addToWishlist,
                 removeFromWishlist,
                 isInWishlist,
-                wishlistCount: wishlistItems.length
+                wishlistCount: wishlistItems.length,
+                refreshWishlist
             }}
         >
             {children}

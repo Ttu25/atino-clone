@@ -1,264 +1,318 @@
-# ATINO - E-commerce Website Clone
+# 🛍️ Atino VN - E-commerce Platform
 
-Clone website thời trang nam ATINO.vn được xây dựng bằng React, TypeScript và Vite.
+[![React](https://img.shields.io/badge/React-19.2.0-blue.svg)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-8.0+-green.svg)](https://mongodb.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-blue.svg)](https://typescriptlang.org/)
 
-![React](https://img.shields.io/badge/React-18.3-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue)
-![Vite](https://img.shields.io/badge/Vite-5.4-purple)
+Một nền tảng thương mại điện tử hiện đại được xây dựng với React, Node.js và MongoDB, cung cấp trải nghiệm mua sắm thời trang chất lượng cao.
 
-## 📋 Tổng quan
+## ✨ Tính năng chính
 
-Website e-commerce đầy đủ chức năng với 18 trang, hệ thống giỏ hàng, wishlist, so sánh sản phẩm, và authentication.
+### 👤 Người dùng
+- **Đăng ký/Đăng nhập** với xác thực JWT
+- **Quản lý tài khoản** cá nhân
+- **Duyệt sản phẩm** với bộ lọc và tìm kiếm
+- **Thêm vào giỏ hàng** và yêu thích
+- **Thanh toán** đơn hàng
+- **Theo dõi đơn hàng** và lịch sử mua hàng
 
-### ✨ Tính năng chính
+### 🛒 Giỏ hàng & Thanh toán
+- **Giỏ hàng thông minh** với cập nhật real-time
+- **Kiểm tra hàng tồn kho** trước khi thanh toán
+- **Tính toán thuế và phí vận chuyển**
+- **Thanh toán an toàn** với nhiều phương thức
 
-- 🛍️ **E-commerce đầy đủ**: Trang chủ, danh sách sản phẩm, chi tiết sản phẩm, giỏ hàng, thanh toán
-- 🔐 **Authentication**: Đăng nhập, đăng ký, quản lý tài khoản (mock authentication)
-- ❤️ **Wishlist**: Danh sách sản phẩm yêu thích
-- 🔄 **Product Comparison**: So sánh tối đa 4 sản phẩm
-- 🔍 **Search**: Tìm kiếm sản phẩm
-- 📦 **Order Tracking**: Tra cứu đơn hàng
-- 📝 **Blog**: Tin tức và bài viết
-- 📱 **Responsive Design**: Tương thích mọi thiết bị
-- 💾 **LocalStorage**: Lưu trữ giỏ hàng, wishlist, comparison, và user data
+### 👨‍💼 Admin Panel
+- **Dashboard** với thống kê chi tiết
+- **Quản lý sản phẩm** (CRUD operations)
+- **Quản lý đơn hàng** (xem, cập nhật trạng thái)
+- **Quản lý người dùng** (kích hoạt/vô hiệu hóa, phân quyền)
+- **Báo cáo và thống kê** real-time
 
-## 🗂️ Cấu trúc dự án
+### 📝 Blog & Nội dung
+- **Hệ thống blog** với bài viết thời trang
+- **SEO-friendly** URLs
+- **Rich text editor** cho admin
 
-```
-atino-vn/
-├── src/
-│   ├── components/
-│   │   ├── layout/
-│   │   │   ├── Header.tsx          # Header với navigation và search
-│   │   │   ├── Footer.tsx          # Footer với links
-│   │   │   └── Layout.tsx          # Layout wrapper
-│   │   ├── product/
-│   │   │   └── ProductCard.tsx     # Card hiển thị sản phẩm
-│   │   └── cart/
-│   │       └── CartDrawer.tsx      # Slide-out cart drawer
-│   ├── context/
-│   │   ├── AuthContext.tsx         # Authentication state
-│   │   ├── CartContext.tsx         # Cart state management
-│   │   ├── WishlistContext.tsx     # Wishlist state
-│   │   └── ComparisonContext.tsx   # Product comparison state
-│   ├── pages/
-│   │   ├── Home.tsx                # Trang chủ
-│   │   ├── Products.tsx            # Danh sách sản phẩm
-│   │   ├── ProductDetail.tsx       # Chi tiết sản phẩm
-│   │   ├── Checkout.tsx            # Thanh toán
-│   │   ├── Login.tsx               # Đăng nhập/Đăng ký
-│   │   ├── Account.tsx             # Tài khoản người dùng
-│   │   ├── Wishlist.tsx            # Danh sách yêu thích
-│   │   ├── ProductComparison.tsx   # So sánh sản phẩm
-│   │   ├── OrderTracking.tsx       # Tra cứu đơn hàng
-│   │   ├── Contact.tsx             # Liên hệ
-│   │   ├── Blog.tsx                # Blog/Tin tức
-│   │   ├── About.tsx               # Giới thiệu
-│   │   ├── PrivacyPolicy.tsx       # Chính sách bảo mật
-│   │   ├── TermsOfService.tsx      # Điều khoản dịch vụ
-│   │   └── ShippingPolicy.tsx      # Chính sách vận chuyển
-│   ├── data/
-│   │   ├── products.ts             # Mock product data
-│   │   └── blog.ts                 # Mock blog data
-│   ├── App.tsx                     # Main app với routing
-│   ├── main.tsx                    # Entry point
-│   └── index.css                   # Global styles
-├── package.json
-├── tsconfig.json
-└── vite.config.ts
-```
+## 🛠️ Tech Stack
+
+### Frontend
+- **React 19** - Modern React với hooks và concurrent features
+- **TypeScript** - Type safety và better DX
+- **React Router DOM** - Client-side routing
+- **Vite** - Fast build tool và dev server
+- **Lucide React** - Beautiful icons
+- **React Hot Toast** - Toast notifications
+
+### Backend
+- **Node.js** + **Express.js** - RESTful API server
+- **MongoDB** + **Mongoose** - NoSQL database
+- **JWT** - Authentication & authorization
+- **bcryptjs** - Password hashing
+- **CORS** - Cross-origin resource sharing
+- **Helmet** - Security headers
+- **Rate limiting** - API protection
+
+### DevOps & Tools
+- **ESLint** + **TypeScript ESLint** - Code linting
+- **Nodemon** - Auto-restart development server
+- **Concurrently** - Run multiple scripts
+- **Compression** - Response compression
+
+## 📋 Yêu cầu hệ thống
+
+- **Node.js** >= 18.0.0
+- **MongoDB** >= 5.0
+- **npm** hoặc **yarn**
 
 ## 🚀 Cài đặt và chạy
 
-### Yêu cầu
-
-- Node.js >= 18.0.0
-- npm hoặc yarn
-
-### Cài đặt
-
+### 1. Clone repository
 ```bash
-# Clone repository
 git clone <repository-url>
-cd atino-vn
+cd atino-clone
+```
 
-# Cài đặt dependencies
+### 2. Cài đặt dependencies
+
+#### Frontend & Backend
+```bash
 npm install
 ```
 
-### Chạy development server
+#### Chỉ Backend
+```bash
+cd backend
+npm install
+```
 
+### 3. Cấu hình Environment Variables
+
+Tạo file `.env` trong thư mục `backend/`:
+```env
+NODE_ENV=development
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/atino_db
+
+JWT_SECRET=your_super_secret_jwt_key_here
+JWT_EXPIRE=30d
+
+FRONTEND_URL=http://localhost:5173
+
+# Email service (optional)
+EMAIL_SERVICE=gmail
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
+```
+
+### 4. Khởi tạo Database
+
+Chạy seed script để tạo dữ liệu mẫu:
+```bash
+cd backend
+npm run seed
+```
+
+### 5. Chạy ứng dụng
+
+#### Chạy cả Frontend và Backend cùng lúc:
 ```bash
 npm run dev
 ```
 
-Mở trình duyệt tại `http://localhost:5173`
+#### Hoặc chạy riêng biệt:
 
-### Build production
-
+**Terminal 1 - Backend:**
 ```bash
-npm run build
+cd backend
+npm run dev
 ```
 
-### Preview production build
-
+**Terminal 2 - Frontend:**
 ```bash
-npm run preview
+npm run dev
 ```
 
-## 📱 Danh sách trang (18 pages)
+### 6. Truy cập ứng dụng
 
-### Core E-commerce
-1. **Homepage** (`/`) - Hero banner, sản phẩm mới, sale
-2. **Products** (`/products`) - Danh sách sản phẩm với filter/sort
-3. **Product Detail** (`/product/:id`) - Chi tiết sản phẩm
-4. **Checkout** (`/checkout`) - Thanh toán đơn hàng
+- **Frontend:** http://localhost:5173
+- **Backend API:** http://localhost:5000
+- **API Documentation:** http://localhost:5000/api/health
 
-### User & Authentication
-5. **Login/Register** (`/login`) - Đăng nhập và đăng ký
-6. **Account** (`/account`) - Quản lý tài khoản
+## 👤 Tài khoản test
 
-### Additional Features
-7. **Wishlist** (`/wishlist`) - Danh sách yêu thích
-8. **Product Comparison** (`/comparison`) - So sánh sản phẩm
-9. **Order Tracking** (`/order-tracking`) - Tra cứu đơn hàng
-10. **Contact** (`/contact`) - Liên hệ
-11. **Blog** (`/blog`) - Tin tức và bài viết
+Sau khi chạy `npm run seed`, bạn có thể đăng nhập với các tài khoản sau:
 
-### Policy Pages
-12. **Privacy Policy** (`/privacy-policy`)
-13. **Terms of Service** (`/terms-of-service`)
-14. **Shipping Policy** (`/shipping-policy`)
+### Admin Account
+- **Email:** admin@atino.vn
+- **Password:** admin123
+- **Quyền:** Quản trị viên (full access)
 
-### Static Pages
-15. **About** (`/about`) - Giới thiệu
-16. **New Arrivals** (`/new-arrivals`)
-17. **Sale** (`/sale`)
-18. **Collections** (`/collections`)
+### Demo User Account
+- **Email:** demo@atino.vn
+- **Password:** demo123
+- **Quyền:** Người dùng thông thường
 
-## 🔐 Authentication
+## 📚 API Documentation
 
-### Demo Account
-```
-Email: demo@atino.vn
-Password: demo123
+### Authentication
+```http
+POST /api/auth/register  # Đăng ký
+POST /api/auth/login     # Đăng nhập
+GET  /api/auth/me        # Thông tin user hiện tại
+POST /api/auth/logout    # Đăng xuất
 ```
 
-### Tính năng
-- Đăng ký tài khoản mới (lưu vào localStorage)
-- Đăng nhập với email/password
-- Quản lý thông tin cá nhân
-- Xem lịch sử đơn hàng (mock data)
-- Protected routes (redirect to login)
-
-## 🛒 State Management
-
-Dự án sử dụng React Context API với 4 contexts:
-
-### AuthContext
-- Mock authentication
-- User profile management
-- Login/Register/Logout
-- Persist to localStorage
-
-### CartContext
-- Add/Remove/Update items
-- Calculate total
-- Persist to localStorage
-
-### WishlistContext
-- Add/Remove products
-- Check if product is in wishlist
-- Persist to localStorage
-
-### ComparisonContext
-- Compare up to 4 products
-- Add/Remove products
-- Persist to localStorage
-
-## 🎨 Design & UI
-
-- **Design System**: Minimalist black & white theme
-- **Typography**: System fonts với fallback
-- **Icons**: Lucide React
-- **Responsive**: Mobile-first approach
-- **Animations**: Smooth transitions và hover effects
-
-## 📦 Dependencies
-
-### Core
-- `react` - UI library
-- `react-dom` - React DOM renderer
-- `react-router-dom` - Client-side routing
-- `typescript` - Type safety
-
-### UI & Icons
-- `lucide-react` - Icon library
-
-### Dev Dependencies
-- `vite` - Build tool
-- `@vitejs/plugin-react` - React plugin for Vite
-- `@types/react` - React TypeScript types
-- `@types/react-dom` - React DOM TypeScript types
-
-## 🌟 Highlights
-
-### Performance
-- ⚡ Bundle size: **90.19 kB** (gzipped)
-- 🚀 Build time: ~2.2s
-- 📦 Code splitting với React Router
-- 💾 LocalStorage caching
-
-### Code Quality
-- ✅ TypeScript strict mode
-- 📝 Type-safe Context API
-- 🎯 Component-based architecture
-- 🔄 Reusable components
-
-### User Experience
-- 🎨 Modern, clean design
-- 📱 Fully responsive
-- ⚡ Fast page transitions
-- 💫 Smooth animations
-
-## 🔧 Customization
-
-### Thay đổi màu sắc
-
-Chỉnh sửa CSS variables trong `src/index.css`:
-
-```css
-:root {
-  --color-black: #000000;
-  --color-white: #ffffff;
-  --color-gray-50: #fafafa;
-  /* ... */
-}
+### Products
+```http
+GET    /api/products           # Lấy danh sách sản phẩm
+GET    /api/products/:id       # Chi tiết sản phẩm
+POST   /api/products           # Tạo sản phẩm (Admin)
+PUT    /api/products/:id       # Cập nhật sản phẩm (Admin)
+DELETE /api/products/:id       # Xóa sản phẩm (Admin)
+GET    /api/products/featured  # Sản phẩm nổi bật
+GET    /api/products/sale      # Sản phẩm giảm giá
 ```
 
-### Thêm sản phẩm
-
-Chỉnh sửa `src/data/products.ts`:
-
-```typescript
-export const products: Product[] = [
-  {
-    id: 'new-product',
-    name: 'Tên sản phẩm',
-    price: 500000,
-    // ...
-  }
-];
+### Cart & Wishlist
+```http
+GET    /api/cart              # Lấy giỏ hàng
+POST   /api/cart              # Thêm vào giỏ hàng
+PUT    /api/cart/:id          # Cập nhật số lượng
+DELETE /api/cart/:id          # Xóa khỏi giỏ hàng
+GET    /api/wishlist          # Danh sách yêu thích
+POST   /api/wishlist          # Thêm vào yêu thích
+DELETE /api/wishlist/:id      # Xóa khỏi yêu thích
 ```
+
+### Orders
+```http
+GET    /api/orders            # Lịch sử đơn hàng
+POST   /api/orders            # Tạo đơn hàng
+GET    /api/orders/:id        # Chi tiết đơn hàng
+PUT    /api/orders/:id/status # Cập nhật trạng thái (Admin)
+```
+
+### Admin APIs
+```http
+GET    /api/admin/users              # Danh sách users
+GET    /api/admin/users/stats        # Thống kê users
+PUT    /api/admin/users/:id/status   # Cập nhật trạng thái user
+PUT    /api/admin/users/:id/role     # Thay đổi quyền user
+
+GET    /api/admin/orders             # Danh sách đơn hàng
+GET    /api/admin/orders/stats       # Thống kê đơn hàng
+PUT    /api/admin/orders/:id/status  # Cập nhật trạng thái đơn hàng
+
+GET    /api/admin/products           # Quản lý sản phẩm
+POST   /api/admin/products           # Tạo sản phẩm
+PUT    /api/admin/products/:id       # Cập nhật sản phẩm
+DELETE /api/admin/products/:id       # Xóa sản phẩm
+```
+
+## 📁 Cấu trúc dự án
+
+```
+atino-clone/
+├── backend/                    # Backend Node.js
+│   ├── controllers/           # Business logic
+│   ├── middleware/            # Express middleware
+│   ├── models/               # Mongoose schemas
+│   ├── routes/               # API routes
+│   ├── scripts/              # Database scripts
+│   ├── utils/                # Helper functions
+│   ├── server.js             # Main server file
+│   └── package.json
+├── src/                       # Frontend React
+│   ├── components/           # Reusable components
+│   ├── contexts/             # React contexts
+│   ├── pages/                # Page components
+│   ├── services/             # API services
+│   ├── styles/               # Global styles
+│   ├── utils/                # Helper functions
+│   └── App.tsx
+├── public/                   # Static assets
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+└── README.md
+```
+
+## 📜 Scripts
+
+### Root level
+```bash
+npm run dev              # Chạy cả FE & BE
+npm run dev:frontend     # Chỉ chạy frontend
+npm run dev:backend      # Chỉ chạy backend
+npm run build            # Build production
+npm run lint             # Lint code
+npm run preview          # Preview production build
+```
+
+### Backend
+```bash
+cd backend
+npm start                # Chạy production server
+npm run dev              # Chạy dev server với nodemon
+npm run seed             # Khởi tạo dữ liệu mẫu
+```
+
+### Backend
+```bash
+PORT=5000
+NODE_ENV=development
+MONGODB_URI=mongodb+srv://longddm4200:longddm4200@longddm4200.l2gxluo.mongodb.net/atino
+JWT_SECRET=0ifPZj1ktYSLVzAUe+VBsZwTTT5iZOlFiCWCVAHyxzw=
+JWT_EXPIRE=7d
+FRONTEND_URL=http://localhost:5173
+```
+
+
+## 🔧 Development Guidelines
+
+### Code Style
+- Sử dụng **ESLint** và **TypeScript** strict mode
+- Follow **React best practices** và hooks patterns
+- Viết **JSDoc comments** cho functions phức tạp
+- Sử dụng **semantic commit messages**
+
+### Database
+- Sử dụng **Mongoose** cho data validation
+- Implement **proper indexing** cho performance
+- **Backup database** regularly
+- Sử dụng **transactions** cho operations quan trọng
+
+### Security
+- **Validate all inputs** server-side
+- **Sanitize data** trước khi lưu database
+- **Rate limiting** cho API endpoints
+- **Helmet** cho security headers
+- **CORS** configuration properly
+
+## 🤝 Contributing
+
+1. Fork repository
+2. Tạo feature branch: `git checkout -b feature/AmazingFeature`
+3. Commit changes: `git commit -m 'Add some AmazingFeature'`
+4. Push to branch: `git push origin feature/AmazingFeature`
+5. Tạo Pull Request
 
 ## 📝 License
 
-MIT License - Copyright (c) 2025 ATINO
+Dự án này được phân phối dưới giấy phép MIT. Xem file `LICENSE` để biết thêm chi tiết.
 
-## 👨‍💻 Author
+## 👥 Support
 
-Developed with ❤️ using React + TypeScript + Vite
+Nếu bạn có câu hỏi hoặc cần hỗ trợ:
+
+- Tạo **Issue** trên GitHub
+- Liên hệ: support@atino.vn
+- Documentation: [Link đến docs]
 
 ---
 
-**Note**: Đây là project demo với mock data. Để sử dụng trong production, cần tích hợp backend API thực tế cho authentication, products, và orders.
+**Made with ❤️ by Atino Team**
+
+*Khám phá phong cách sống hiện đại với Atino VN - Nơi thời trang gặp gỡ công nghệ!* 🛍️✨

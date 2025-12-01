@@ -1,42 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { products } from '../../data/products';
+import { productsAPI } from '../../services/api';
 import type { Product } from '../../data/products';
 import { ProductCard } from '../../components/product/ProductCard';
-import { Filter, ChevronDown } from 'lucide-react';
+import { Filter, ChevronDown, Loader } from 'lucide-react';
 import './Products.css';
 
 export const Products: React.FC = () => {
     const [searchParams] = useSearchParams();
     const categoryParam = searchParams.get('category');
 
-    const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<string[]>([]);
+    const [loading, setLoading] = useState(true);
     const [sortBy, setSortBy] = useState('newest');
     const [selectedCategory, setSelectedCategory] = useState(categoryParam || 'All');
 
-    const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
-
+    // Fetch categories
     useEffect(() => {
-        let result = [...products];
+        const fetchCategories = async () => {
+            try {
+                const response = await productsAPI.getCategories();
+                if (response.success) {
+                    setCategories(['All', ...response.data]);
+                }
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+        fetchCategories();
+    }, []);
 
-        // Filter by category
-        if (selectedCategory !== 'All') {
-            result = result.filter(p => p.category === selectedCategory);
-        }
+    // Fetch products
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                const params: any = { sort: sortBy };
 
-        // Sort
-        switch (sortBy) {
-            case 'price-asc':
-                result.sort((a, b) => a.price - b.price);
-                break;
-            case 'price-desc':
-                result.sort((a, b) => b.price - a.price);
-                break;
-            default: // newest
-                result.sort((a, b) => (b.isNew === a.isNew ? 0 : b.isNew ? 1 : -1));
-        }
+                if (selectedCategory !== 'All') {
+                    params.category = selectedCategory;
+                }
 
-        setFilteredProducts(result);
+                const response = await productsAPI.getProducts(params);
+                if (response.success) {
+                    setProducts(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
     }, [selectedCategory, sortBy]);
 
     useEffect(() => {
@@ -82,9 +99,14 @@ export const Products: React.FC = () => {
             </div>
 
             <div className="product-grid">
-                {filteredProducts.length > 0 ? (
-                    filteredProducts.map(product => (
-                        <ProductCard key={product.id} product={product} />
+                {loading ? (
+                    <div className="loading-container">
+                        <Loader className="loading-spinner" size={40} />
+                        <p>Đang tải sản phẩm...</p>
+                    </div>
+                ) : products.length > 0 ? (
+                    products.map(product => (
+                        <ProductCard key={product.id || product._id} product={product} />
                     ))
                 ) : (
                     <div className="no-products">Không tìm thấy sản phẩm nào.</div>

@@ -36,30 +36,30 @@ export const CartDrawer: React.FC = () => {
                         </div>
                     ) : (
                         items.map((item) => (
-                            <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="cart-item">
+                            <div key={`${item.product._id || item.product.id}-${item.selectedSize}-${item.selectedColor}`} className="cart-item">
                                 <div className="cart-item-image">
-                                    <img src={item.image} alt={item.name} />
+                                    <img src={item.product.image} alt={item.product.name} />
                                 </div>
                                 <div className="cart-item-info">
-                                    <h3 className="cart-item-title">{item.name}</h3>
+                                    <h3 className="cart-item-title">{item.product.name}</h3>
                                     <div className="cart-item-variant">
                                         {item.selectedColor} / {item.selectedSize}
                                     </div>
-                                    <div className="cart-item-price">{formatPrice(item.price)}</div>
+                                    <div className="cart-item-price">{formatPrice(item.product.price)}</div>
 
                                     <div className="cart-item-actions">
                                         <div className="quantity-control">
-                                            <button onClick={() => updateQuantity(item.id, item.selectedSize, item.selectedColor, -1)}>
+                                            <button onClick={() => updateQuantity(item.product._id || item.product.id, item.selectedSize, item.selectedColor, Math.max(1, item.quantity - 1))}>
                                                 <Minus size={14} />
                                             </button>
                                             <span>{item.quantity}</span>
-                                            <button onClick={() => updateQuantity(item.id, item.selectedSize, item.selectedColor, 1)}>
+                                            <button onClick={() => updateQuantity(item.product._id || item.product.id, item.selectedSize, item.selectedColor, item.quantity + 1)}>
                                                 <Plus size={14} />
                                             </button>
                                         </div>
                                         <button
                                             className="remove-btn"
-                                            onClick={() => removeFromCart(item.id, item.selectedSize, item.selectedColor)}
+                                            onClick={() => removeFromCart(item.product._id || item.product.id, item.selectedSize, item.selectedColor)}
                                         >
                                             <Trash2 size={18} />
                                         </button>
