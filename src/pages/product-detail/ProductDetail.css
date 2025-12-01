@@ -377,6 +377,144 @@
     color: var(--color-gray-700);
 }
 
+/* Image Zoom Modal */
+.image-zoom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+    cursor: zoom-out;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.zoom-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: zoomIn 0.3s ease-out;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.zoom-close-btn {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 2001;
+    width: 44px;
+    height: 44px;
+}
+
+.zoom-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.zoom-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 2001;
+    width: 56px;
+    height: 56px;
+}
+
+.zoom-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.zoom-nav-prev {
+    left: 20px;
+}
+
+.zoom-nav-next {
+    right: 20px;
+}
+
+.zoom-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    animation: imageZoomIn 0.3s ease-out;
+}
+
+@keyframes imageZoomIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.zoom-image-counter {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 /* Loading states */
 .loading {
     display: flex;
@@ -428,48 +566,81 @@
         grid-template-columns: 1fr;
         gap: 32px;
     }
-    
+
     .main-image img {
         height: 400px;
     }
-    
+
     .detail-title {
         font-size: 24px;
     }
-    
+
     .detail-price {
         font-size: 20px;
     }
-    
+
     .detail-actions {
         flex-wrap: wrap;
     }
-    
+
     .add-to-cart-btn {
         flex: 1 1 100%;
         order: 3;
     }
-    
+
     .quantity-selector {
         flex: 1;
         min-width: 120px;
     }
-    
+
     .wishlist-btn {
         width: 48px;
         flex-shrink: 0;
     }
-    
+
     .size-guide-modal {
         padding: 10px;
     }
-    
+
     .size-guide-content {
         max-width: none;
     }
-    
+
     .size-table {
         font-size: 14px;
+    }
+
+    .zoom-close-btn {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+
+    .zoom-modal-content {
+        max-width: 95vw;
+        max-height: 95vh;
+    }
+
+    .zoom-nav-btn {
+        width: 44px;
+        height: 44px;
+        padding: 12px;
+    }
+
+    .zoom-nav-prev {
+        left: 10px;
+    }
+
+    .zoom-nav-next {
+        right: 10px;
+    }
+
+    .zoom-image-counter {
+        bottom: -40px;
+        font-size: 12px;
+        padding: 6px 12px;
     }
 }
 

@@ -1,7 +1,7 @@
 const API_BASE_URL = 'http://localhost:5000/api';
 
 // Generic API request function
-async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<any> {
+export async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<any> {
   const url = `${API_BASE_URL}${endpoint}`;
 
   const defaultOptions: RequestInit = {

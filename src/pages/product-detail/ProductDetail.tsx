@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { productsAPI } from '../../services/api';
 import type { Product } from '../../data/products';
-import { Star, Minus, Plus, ShoppingBag, Heart, Loader, Ruler, X } from 'lucide-react';
+import { Star, Minus, Plus, ShoppingBag, Heart, Loader, Ruler, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useAuth } from '../../context/AuthContext';
@@ -20,6 +20,7 @@ export const ProductDetail: React.FC = () => {
     const [selectedColor, setSelectedColor] = useState('');
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [showSizeGuide, setShowSizeGuide] = useState(false);
+    const [showZoomModal, setShowZoomModal] = useState(false);
     const [addingToCart, setAddingToCart] = useState(false);
     const [addingToWishlist, setAddingToWishlist] = useState(false);
 
@@ -67,6 +68,25 @@ export const ProductDetail: React.FC = () => {
 
         fetchProduct();
     }, [id]);
+
+    // Handle ESC key to close zoom modal
+    useEffect(() => {
+        const handleEscKey = (event: KeyboardEvent) => {
+            if (event.key === 'Escape' && showZoomModal) {
+                setShowZoomModal(false);
+            }
+        };
+
+        if (showZoomModal) {
+            document.addEventListener('keydown', handleEscKey);
+            document.body.style.overflow = 'hidden'; // Prevent body scroll when modal is open
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleEscKey);
+            document.body.style.overflow = 'unset';
+        };
+    }, [showZoomModal]);
 
     if (loading) {
         return (
@@ -255,17 +275,76 @@ export const ProductDetail: React.FC = () => {
         </div>
     );
 
+    const handleNextImage = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setSelectedImageIndex((prev) => (prev + 1) % productImages.length);
+    };
+
+    const handlePrevImage = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setSelectedImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length);
+    };
+
+    const ImageZoomModal = () => (
+        <div className="image-zoom-modal" onClick={() => setShowZoomModal(false)}>
+            <div className="zoom-modal-content" onClick={(e) => e.stopPropagation()}>
+                <button
+                    className="zoom-close-btn"
+                    onClick={() => setShowZoomModal(false)}
+                    aria-label="Đóng"
+                >
+                    <X size={24} />
+                </button>
+                {productImages.length > 1 && (
+                    <>
+                        <button
+                            className="zoom-nav-btn zoom-nav-prev"
+                            onClick={handlePrevImage}
+                            aria-label="Ảnh trước"
+                        >
+                            <ChevronLeft size={32} />
+                        </button>
+                        <button
+                            className="zoom-nav-btn zoom-nav-next"
+                            onClick={handleNextImage}
+                            aria-label="Ảnh sau"
+                        >
+                            <ChevronRight size={32} />
+                        </button>
+                    </>
+                )}
+                <img
+                    src={productImages[selectedImageIndex]}
+                    alt={product.name}
+                    className="zoom-image"
+                    onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = '/placeholder-image.jpg';
+                    }}
+                />
+                {productImages.length > 1 && (
+                    <div className="zoom-image-counter">
+                        {selectedImageIndex + 1} / {productImages.length}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+
     return (
         <div className="product-detail-page container">
             {showSizeGuide && <SizeGuideModal />}
+            {showZoomModal && <ImageZoomModal />}
             
             <div className="product-detail-grid">
                 {/* Image Gallery */}
                 <div className="product-gallery">
                     <div className="main-image">
-                        <img 
-                            src={productImages[selectedImageIndex]} 
-                            alt={product.name} 
+                        <img
+                            src={productImages[selectedImageIndex]}
+                            alt={product.name}
+                            onClick={() => setShowZoomModal(true)}
+                            style={{ cursor: 'zoom-in' }}
                             onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.src = '/placeholder-image.jpg';
