@@ -8,7 +8,7 @@ import './Checkout.css';
 import toast from 'react-hot-toast';
 
 export const Checkout: React.FC = () => {
-    const { items, cartTotal, clearCart, loading: cartLoading } = useCart();
+    const { items, cartTotal, clearCart, } = useCart();
     const { user, isAuthenticated, loading: authLoading } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);

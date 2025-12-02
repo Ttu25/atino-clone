@@ -8,9 +8,7 @@ import {
   Users,
   LogOut,
   Menu,
-  X,
-  BarChart3,
-  Settings
+  X
 } from 'lucide-react';
 import './AdminLayout.css';
 

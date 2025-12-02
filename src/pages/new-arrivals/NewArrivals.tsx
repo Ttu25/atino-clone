@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { productsAPI } from '../../services/api';
 import type { Product } from '../../data/products';
 import { ProductCard } from '../../components/product/ProductCard';
-import { Loader, Filter, ChevronDown } from 'lucide-react';
+import { Loader, ChevronDown } from 'lucide-react';
 import './NewArrivals.css';
 
 export const NewArrivals: React.FC = () => {

@@ -15,7 +15,10 @@ export const Wishlist: React.FC = () => {
 
     const handleAddToCart = (item: typeof wishlistItems[0]) => {
         addToCart(item, 1, 'M', 'Black');
-        removeFromWishlist(item.id);
+        const productId = item.id || item._id;
+        if (productId) {
+            removeFromWishlist(productId);
+        }
     };
 
     if (wishlistItems.length === 0) {
@@ -58,7 +61,12 @@ export const Wishlist: React.FC = () => {
                                 </button>
                                 <button
                                     className="btn btn-outline remove-btn"
-                                    onClick={() => removeFromWishlist(item.id)}
+                                    onClick={() => {
+                                        const productId = item.id || item._id;
+                                        if (productId) {
+                                            removeFromWishlist(productId);
+                                        }
+                                    }}
                                 >
                                     <Trash2 size={18} />
                                 </button>

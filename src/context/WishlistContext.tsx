@@ -40,7 +40,12 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const addToWishlist = async (product: Product): Promise<boolean> => {
         try {
             setLoading(true);
-            const response = await wishlistAPI.addToWishlist(product.id || product._id);
+            const productId = product.id || product._id;
+            if (!productId) {
+                console.error('Product ID is missing');
+                return false;
+            }
+            const response = await wishlistAPI.addToWishlist(productId);
 
             if (response.success) {
                 await refreshWishlist();

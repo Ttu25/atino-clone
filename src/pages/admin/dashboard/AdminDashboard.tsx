@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { AdminLayout } from '../components/AdminLayout';
-import { ordersAPI } from '../../../services/api';
 import {
   Package,
   ShoppingCart,
   Users,
   DollarSign,
   TrendingUp,
-  TrendingDown,
-  Eye
 } from 'lucide-react';
 import './AdminDashboard.css';
 

@@ -42,7 +42,12 @@ export const ProductComparison: React.FC = () => {
                                     <div className="product-header">
                                         <button
                                             className="remove-product-btn"
-                                            onClick={() => removeFromComparison(item.id)}
+                                            onClick={() => {
+                                                const productId = item.id || item._id;
+                                                if (productId) {
+                                                    removeFromComparison(productId);
+                                                }
+                                            }}
                                         >
                                             <X size={20} />
                                         </button>
