@@ -6,6 +6,7 @@ import { Star, Minus, Plus, ShoppingBag, Heart, Loader, Ruler, X, ChevronLeft, C
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useAuth } from '../../context/AuthContext';
+import { CommentsSection } from '../../components/product/CommentsSection';
 import './ProductDetail.css';
 import toast from 'react-hot-toast';
 
@@ -505,6 +506,12 @@ export const ProductDetail: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Comments Section */}
+            {product && (() => {
+                const productId = product.id || product._id;
+                return productId ? <CommentsSection productId={productId} /> : null;
+            })()}
         </div>
     );
 };

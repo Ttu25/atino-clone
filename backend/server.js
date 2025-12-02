@@ -13,6 +13,7 @@ import orderRoutes from './routes/orders.js';
 import wishlistRoutes from './routes/wishlist.js';
 import blogRoutes from './routes/blog.js';
 import adminRoutes from './routes/admin.js';
+import commentRoutes from './routes/comments.js';
 
 dotenv.config();
 
@@ -72,6 +73,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/blog', blogRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/comments', commentRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

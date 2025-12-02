@@ -3,18 +3,20 @@ import { useSearchParams } from 'react-router-dom';
 import { productsAPI } from '../../services/api';
 import type { Product } from '../../data/products';
 import { ProductCard } from '../../components/product/ProductCard';
-import { Filter, ChevronDown, Loader } from 'lucide-react';
+import { Filter, ChevronDown, Loader, Search, X } from 'lucide-react';
 import './Products.css';
 
 export const Products: React.FC = () => {
     const [searchParams] = useSearchParams();
     const categoryParam = searchParams.get('category');
+    const searchParam = searchParams.get('search');
 
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
     const [sortBy, setSortBy] = useState('newest');
     const [selectedCategory, setSelectedCategory] = useState(categoryParam || 'All');
+    const [searchQuery, setSearchQuery] = useState(searchParam || '');
 
     // Fetch categories
     useEffect(() => {
@@ -42,6 +44,10 @@ export const Products: React.FC = () => {
                     params.category = selectedCategory;
                 }
 
+                if (searchQuery.trim()) {
+                    params.search = searchQuery.trim();
+                }
+
                 const response = await productsAPI.getProducts(params);
                 if (response.success) {
                     setProducts(response.data);
@@ -54,7 +60,7 @@ export const Products: React.FC = () => {
         };
 
         fetchProducts();
-    }, [selectedCategory, sortBy]);
+    }, [selectedCategory, sortBy, searchQuery]);
 
     useEffect(() => {
         if (categoryParam) {
@@ -62,13 +68,53 @@ export const Products: React.FC = () => {
         }
     }, [categoryParam]);
 
+    useEffect(() => {
+        if (searchParam !== null) {
+            setSearchQuery(searchParam);
+        } else {
+            setSearchQuery('');
+        }
+    }, [searchParam]);
+
     return (
         <div className="products-page container">
             <div className="products-header">
-                <h1 className="page-title">
-                    {selectedCategory === 'All' ? 'TẤT CẢ SẢN PHẨM' : selectedCategory.toUpperCase()}
-                </h1>
+                <div className="title-section">
+                    <h1 className="page-title">
+                        {searchQuery ? `KẾT QUẢ TÌM KIẾM: "${searchQuery}"` :
+                         selectedCategory === 'All' ? 'TẤT CẢ SẢN PHẨM' : selectedCategory.toUpperCase()}
+                    </h1>
+                    {searchQuery && (
+                        <button
+                            className="clear-search-btn"
+                            onClick={() => setSearchQuery('')}
+                            title="Xóa tìm kiếm"
+                        >
+                            <X size={16} />
+                        </button>
+                    )}
+                </div>
                 <div className="products-controls">
+                    <div className="search-group">
+                        <Search size={20} />
+                        <input
+                            type="text"
+                            placeholder="Tìm kiếm sản phẩm..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="search-input"
+                        />
+                        {searchQuery && (
+                            <button
+                                className="clear-search-icon"
+                                onClick={() => setSearchQuery('')}
+                                title="Xóa tìm kiếm"
+                            >
+                                <X size={16} />
+                            </button>
+                        )}
+                    </div>
+
                     <div className="filter-group">
                         <Filter size={20} />
                         <select

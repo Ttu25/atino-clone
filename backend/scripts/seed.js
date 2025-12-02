@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import User from '../models/User.js';
 import Product from '../models/Product.js';
 import Blog from '../models/Blog.js';
+import Comment from '../models/Comment.js';
 
 dotenv.config();
 
@@ -335,6 +336,39 @@ const sampleProducts = [
   }
 ];
 
+const sampleComments = [
+  {
+    product: null, // Will be set to actual product IDs after products are created
+    user: null, // Will be set to actual user IDs after users are created
+    content: 'Sản phẩm chất lượng tốt, form dáng đẹp, rất hài lòng với chất liệu vải thoáng mát.',
+    rating: 5
+  },
+  {
+    product: null,
+    user: null,
+    content: 'Giao hàng nhanh, đóng gói cẩn thận. Sản phẩm đúng như mô tả, màu sắc đẹp.',
+    rating: 4
+  },
+  {
+    product: null,
+    user: null,
+    content: 'Chất liệu vải tốt, đường kim mũi chỉ chắc chắn. Sẽ ủng hộ shop thêm!',
+    rating: 5
+  },
+  {
+    product: null,
+    user: null,
+    content: 'Size hơi nhỏ so với mong đợi, nhưng overall sản phẩm ổn. Phù hợp giá tiền.',
+    rating: 3
+  },
+  {
+    product: null,
+    user: null,
+    content: 'Màu sắc tươi sáng, form dáng trẻ trung. Rất thích sản phẩm này!',
+    rating: 5
+  }
+];
+
 const sampleBlogPosts = [
   {
     title: 'Xu hướng thời trang nam 2024',
@@ -409,6 +443,7 @@ const seedDatabase = async () => {
     await User.deleteMany();
     await Product.deleteMany();
     await Blog.deleteMany();
+    await Comment.deleteMany();
 
     console.log('Cleared existing data');
 
@@ -446,6 +481,16 @@ const seedDatabase = async () => {
     );
     console.log('Created blog posts');
 
+    // Create sample comments
+    const comments = await Comment.insertMany(
+      sampleComments.map((comment, index) => ({
+        ...comment,
+        product: products[index % products.length]._id, // Assign to different products
+        user: demoUser._id // All comments from demo user
+      }))
+    );
+    console.log('Created sample comments');
+
     console.log('Database seeded successfully!');
     console.log(`✅ Created ${products.length} products with various categories:`);
     console.log('   - Áo Len: 3 sản phẩm');
@@ -457,6 +502,7 @@ const seedDatabase = async () => {
     console.log('   - Áo Hoodie: 2 sản phẩm');
     console.log('   - Và nhiều loại khác...');
     console.log(`✅ Created ${blogPosts.length} blog posts`);
+    console.log(`✅ Created ${comments.length} sample comments`);
     console.log('');
     console.log('🔐 Admin credentials: admin@atino.vn / admin123');
     console.log('👤 Demo user credentials: demo@atino.vn / demo123');

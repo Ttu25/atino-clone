@@ -90,6 +90,29 @@ export const productsAPI = {
     apiRequest(`/products/${id}`, {
       method: 'DELETE',
     }),
+
+  // Comments API
+  getComments: (productId: string) => apiRequest(`/comments/${productId}`),
+
+  createComment: (data: { productId: string; content: string; rating: number }) =>
+    apiRequest('/comments', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  updateComment: (id: string, data: { content?: string; rating?: number }) =>
+    apiRequest(`/comments/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+
+  deleteComment: (id: string) =>
+    apiRequest(`/comments/${id}`, {
+      method: 'DELETE',
+    }),
+
+  checkCommentPermission: (productId: string) =>
+    apiRequest(`/comments/can-comment/${productId}`),
 };
 
 // Cart API
